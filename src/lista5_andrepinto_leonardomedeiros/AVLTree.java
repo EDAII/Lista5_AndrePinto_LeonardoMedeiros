@@ -26,7 +26,7 @@ public class AVLTree {
         return N.height;
     }
 
-    private Node insert(Node node, int value) {
+    public Node insert(Node node, int value) {
         /* 1.  Perform the normal BST rotation */
         if (node == null) {
             return(new Node(value));
@@ -213,7 +213,64 @@ public class AVLTree {
 
         return root;
     }
+    public ArrayList treeToArray(Node root){
+        ArrayList a = new ArrayList();
+        if(root == null) {
+            return a;
+        }
 
+        int height = root.height,
+            width = (int)Math.pow(2, height-1);
+
+        // Preparing variables for loop.
+        List<Node> current = new ArrayList<Node>(1),
+            next = new ArrayList<Node>(2);
+        current.add(root);
+
+        final int maxHalfLength = 4;
+        int elements = 1;
+
+        StringBuilder sb = new StringBuilder(maxHalfLength*width);
+        for(int i = 0; i < maxHalfLength*width; i++)
+            sb.append(' ');
+        String textBuffer;
+
+        // Iterating through height levels.
+        for(int i = 0; i < height; i++) {
+
+            sb.setLength(maxHalfLength * ((int)Math.pow(2, height-1-i) - 1));
+
+            // Creating spacer space indicator.
+            textBuffer = sb.toString();
+
+            // Print tree node elements
+            for(Node n : current) {
+
+                if(n == null) {
+
+                    a.add(-1);
+                    next.add(null);
+                    next.add(null);
+
+                } else {
+
+                    a.add(n.value);
+                    next.add(n.left);
+                    next.add(n.right);
+
+                }
+
+            }
+
+            // Renewing indicators for next run.
+            elements *= 2;
+            current = next;
+            next = new ArrayList<Node>(elements);
+
+        }
+        
+        return a;
+    }
     public void print(Node root) {
 
         if(root == null) {
@@ -299,35 +356,35 @@ public class AVLTree {
 
     }
 
-    public static void main(String args[]) {
-        AVLTree t = new AVLTree();
-        Node root = null;
-        while (true) {
-            System.out.println("(1) Insert");
-            System.out.println("(2) Delete");
-
-            try {
-                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-                String s = bufferRead.readLine();
-
-                if (Integer.parseInt(s) == 1) {
-                    System.out.print("Value to be inserted: ");
-                    root = t.insert(root, Integer.parseInt(bufferRead.readLine()));
-                }
-                else if (Integer.parseInt(s) == 2) {
-                    System.out.print("Value to be deleted: ");
-                    root = t.deleteNode(root, Integer.parseInt(bufferRead.readLine()));
-                }
-                else {
-                    System.out.println("Invalid choice, try again!");
-                    continue;
-                }
-
-                t.print(root);
-            }
-            catch(IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public static void main(String args[]) {
+//        AVLTree t = new AVLTree();
+//        Node root = null;
+//        while (true) {
+//            System.out.println("(1) Insert");
+//            System.out.println("(2) Delete");
+//
+//            try {
+//                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+//                String s = bufferRead.readLine();
+//
+//                if (Integer.parseInt(s) == 1) {
+//                    System.out.print("Value to be inserted: ");
+//                    root = t.insert(root, Integer.parseInt(bufferRead.readLine()));
+//                }
+//                else if (Integer.parseInt(s) == 2) {
+//                    System.out.print("Value to be deleted: ");
+//                    root = t.deleteNode(root, Integer.parseInt(bufferRead.readLine()));
+//                }
+//                else {
+//                    System.out.println("Invalid choice, try again!");
+//                    continue;
+//                }
+//
+//                t.print(root);
+//            }
+//            catch(IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
