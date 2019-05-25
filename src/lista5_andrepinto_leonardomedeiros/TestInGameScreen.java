@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -47,6 +48,9 @@ public class TestInGameScreen extends javax.swing.JFrame {
         public void run() {
             try {
                 while(timeLimit>0 && isPlaying){
+                    if(score >= 6669666){
+                        youWin();
+                    }
                     if(increaseTime){
                         increaseTime = false;
                         timeLimit+=timeLimit*0.1;
@@ -786,6 +790,18 @@ public class TestInGameScreen extends javax.swing.JFrame {
         updateValues(a);
 //        tree.print(root);
 //        System.out.printf("%d %d\n", (int)tree.answer.getFirst(), (int)tree.answer.getSecond());
+    }
+    private void youWin(){
+        isPlaying = false;
+        JOptionPane.showMessageDialog(null, "This is never meant to happen so we have never finished this function...");
+        JOptionPane.showMessageDialog(null, "So...");
+        JOptionPane.showMessageDialog(null, "That's embarrassing...");
+        JOptionPane.showMessageDialog(null, "Please just hit OK and I will close the game for you...");
+        JOptionPane.showMessageDialog(null, "Do not come back, you cheater!");
+        for(int i = 0; i < 100; i++){
+            JOptionPane.showMessageDialog(null, 0);
+        }
+        exit(666);
     }
     private void youDied() throws IOException{
         updateScore();
