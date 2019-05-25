@@ -88,6 +88,8 @@ public class TestInGameScreen extends javax.swing.JFrame {
      */
     public TestInGameScreen() {
         initComponents();
+        panel_R.setBackground(Color.CYAN);
+        panel_L.setBackground(Color.PINK);
         AVLTree tree = new AVLTree();
         AVLTree.Node root = null;
         ArrayList randNumbers = new ArrayList();
@@ -99,11 +101,15 @@ public class TestInGameScreen extends javax.swing.JFrame {
         for(int i = 0; i < maxElements; i++){
             root = tree.insert(root, (int)randNumbers.get(i));
         }
+        String nextInteraction = "";
+        nextInteraction+="insert: ";
+        nextInteraction+=(int)randNumbers.get(maxElements);
+        answerLabel.setText(nextInteraction);
         ArrayList a = new ArrayList();
         a = tree.treeToArray(root);
         updateValues(a);
     }
-    public void updateValues(ArrayList a){
+    private void updateValues(ArrayList a){
         try{
             panel_1.setValue((int) a.get(0));
             panel_2.setValue((int) a.get(1));
@@ -186,6 +192,13 @@ public class TestInGameScreen extends javax.swing.JFrame {
         panel_3 = new CirclePanel(-1);
         panel_2 = new CirclePanel(-1);
         panel_1 = new CirclePanel(-1);
+        panel_L = new java.awt.Panel();
+        panel_R = new java.awt.Panel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        answerLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -596,8 +609,58 @@ public class TestInGameScreen extends javax.swing.JFrame {
         getContentPane().add(panel_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
         panel_1.getAccessibleContext().setAccessibleName("");
 
+        javax.swing.GroupLayout panel_32Layout = new javax.swing.GroupLayout(panel_L);
+        panel_L.setLayout(panel_32Layout);
+        panel_32Layout.setHorizontalGroup(
+            panel_32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        panel_32Layout.setVerticalGroup(
+            panel_32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panel_L, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 40, 40));
+
+        javax.swing.GroupLayout panel_33Layout = new javax.swing.GroupLayout(panel_R);
+        panel_R.setLayout(panel_33Layout);
+        panel_33Layout.setHorizontalGroup(
+            panel_33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        panel_33Layout.setVerticalGroup(
+            panel_33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panel_R, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, 40, 40));
+
+        jLabel1.setText("Right Rotation");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 510, -1, -1));
+
+        jLabel2.setText("Left Rotation");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, -1, -1));
+
+        jButton1.setText("ANSWER");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 490, 130, -1));
+
+        jLabel3.setText("Next value to - > ");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, -1, -1));
+
+        answerLabel.setText("insert/remove: value");
+        getContentPane().add(answerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, -1, -1));
+        
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>   
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+    } 
 
 //    /**
 //     * @param args the command line arguments
@@ -666,5 +729,12 @@ public class TestInGameScreen extends javax.swing.JFrame {
     private CirclePanel panel_7;
     private CirclePanel panel_8;
     private CirclePanel panel_9;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel answerLabel;
+    private java.awt.Panel panel_L;
+    private java.awt.Panel panel_R;
     // End of variables declaration                   
 }

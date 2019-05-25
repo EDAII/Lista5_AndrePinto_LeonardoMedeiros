@@ -90,6 +90,13 @@ public class InGameScreen extends javax.swing.JFrame {
         panel_3 = new java.awt.Panel();
         panel_2 = new java.awt.Panel();
         panel_1 = new java.awt.Panel();
+        panel_32 = new java.awt.Panel();
+        panel_33 = new java.awt.Panel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(254, 254, 254));
@@ -501,8 +508,58 @@ public class InGameScreen extends javax.swing.JFrame {
         getContentPane().add(panel_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
         panel_1.getAccessibleContext().setAccessibleName("");
 
+        javax.swing.GroupLayout panel_32Layout = new javax.swing.GroupLayout(panel_32);
+        panel_32.setLayout(panel_32Layout);
+        panel_32Layout.setHorizontalGroup(
+            panel_32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        panel_32Layout.setVerticalGroup(
+            panel_32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panel_32, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 40, 40));
+
+        javax.swing.GroupLayout panel_33Layout = new javax.swing.GroupLayout(panel_33);
+        panel_33.setLayout(panel_33Layout);
+        panel_33Layout.setHorizontalGroup(
+            panel_33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+        panel_33Layout.setVerticalGroup(
+            panel_33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panel_33, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, 40, 40));
+
+        jLabel1.setText("Right Rotation");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 510, -1, -1));
+
+        jLabel2.setText("Left Rotation");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 420, -1, -1));
+
+        jButton1.setText("ANSWER");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 490, 130, -1));
+
+        jLabel3.setText("Next value to - > ");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, -1, -1));
+
+        jLabel4.setText("insert: 15");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -540,6 +597,11 @@ public class InGameScreen extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private java.awt.Panel panel_1;
     private java.awt.Panel panel_10;
     private java.awt.Panel panel_11;
@@ -565,6 +627,8 @@ public class InGameScreen extends javax.swing.JFrame {
     private java.awt.Panel panel_3;
     private java.awt.Panel panel_30;
     private java.awt.Panel panel_31;
+    private java.awt.Panel panel_32;
+    private java.awt.Panel panel_33;
     private java.awt.Panel panel_4;
     private java.awt.Panel panel_5;
     private java.awt.Panel panel_6;

@@ -25,6 +25,61 @@ public class AVLTree {
             return 0;
         return N.height;
     }
+    
+    public Pair<Integer, Integer> fakeInsert(Node node, int value) {
+        /* 1.  Perform the normal BST rotation */
+        Pair<Integer, Integer> pair = new Pair<Integer,Integer>(-1,-1);
+        if (node == null) {
+            return(pair);
+        }
+
+        if (value < node.value)
+            node.left  = insert(node.left, value);
+        else
+            node.right = insert(node.right, value);
+
+        /* 2. Update height of this ancestor node */
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+
+        /* 3. Get the balance factor of this ancestor node to check whether
+           this node became unbalanced */
+        int balance = getBalance(node);
+
+        // If this node becomes unbalanced, then there are 4 cases
+
+        // Left Left Case
+        if (balance > 1 && value < node.left.value)
+        {
+            pair.setFirst(node.value);
+            return (pair);
+        }
+
+        // Right Right Case
+        if (balance < -1 && value > node.right.value)
+        {
+            pair.setSecond(node.value);
+            return (pair);
+        }
+
+        // Left Right Case
+        if (balance > 1 && value > node.left.value)
+        {
+            pair.setFirst(node.left.value);
+            pair.setSecond(node.value);
+            return (pair);
+        }
+
+        // Right Left Case
+        if (balance < -1 && value < node.right.value)
+        {
+            pair.setFirst(node.value);
+            pair.setSecond(node.right.value);
+            return (pair);
+        }
+
+        /* return the (unchanged) node pointer */
+        return pair;
+    }
 
     public Node insert(Node node, int value) {
         /* 1.  Perform the normal BST rotation */
