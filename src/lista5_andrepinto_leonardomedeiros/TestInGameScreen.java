@@ -9,8 +9,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import static java.lang.System.exit;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,11 +24,33 @@ import javax.swing.JPanel;
  * @author andrelucax
  */
 public class TestInGameScreen extends javax.swing.JFrame {
+    ImageIcon icon = new ImageIcon("images/youDied.jpg");
+    JLabel image = new JLabel(icon);
+    public int timeLimit = 20000;
+    public int score = 0;
+    public boolean isPlaying = true;
     public int lClick = 0;
     public int rClick = 0;
     public int lastLClick = -1;
     public int lastRClick = -1;
     AVLTree tree = new AVLTree();
+    Thread timeThread = new Thread(){
+        @Override
+        public void run() {
+            try {
+                while(timeLimit>0 && isPlaying){
+                    sleep(100);
+                    timeLimit-=100;
+                    String timeText = Integer.toString(timeLimit/1000)+'.'+Integer.toString((timeLimit/100)%10);
+                    labelTime.setText(timeText);
+                }
+                youDied();
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TestInGameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    };
     public class CirclePanel extends JPanel {
         private int value;
         private int type;
@@ -34,6 +60,9 @@ public class TestInGameScreen extends javax.swing.JFrame {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    if(!isPlaying){
+                        return;
+                    }
                     if(type != 0){
                         if(type == 1){ //left
                             lClick--;
@@ -92,8 +121,16 @@ public class TestInGameScreen extends javax.swing.JFrame {
     /*
      * Creates new form InGameScreen
      */
+    public void initMyComponents(){
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(-180, 210, 1156, 142));
+        image.setVisible(false);
+        pack();
+    }
     public TestInGameScreen() {
+        initMyComponents();
         initComponents();
+        timeThread.start();
         panel_R.setBackground(Color.CYAN);
         panel_L.setBackground(Color.PINK);
         AVLTree.Node root = null;
@@ -206,6 +243,10 @@ public class TestInGameScreen extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         answerLabel = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        labelTime = new javax.swing.JLabel();
+        labelScore = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -662,20 +703,36 @@ public class TestInGameScreen extends javax.swing.JFrame {
         answerLabel.setText("insert/remove: value");
         getContentPane().add(answerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, -1, -1));
         
+        jLabel5.setText("Time: ");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        labelTime.setText("20.0");
+        getContentPane().add(labelTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
+
+        labelScore.setText("0");
+        getContentPane().add(labelScore, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 10, -1, -1));
+
+        jLabel8.setText("Score:");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 10, -1, -1));
+
         pack();
     }// </editor-fold>   
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        if(!isPlaying){
+            exit(0);
+        }
         if(tree.answer.getFirst() == lastLClick && tree.answer.getSecond() == lastRClick){
             nextRound();
+            repaint();
         }
         else{
             youDied();
         }
-        repaint();
-        pack();
     } 
     private void nextRound(){
+        score+=timeLimit/100;
+        labelScore.setText(Integer.toString(score));
         ArrayList aux = new ArrayList();
         for(int i = 1; i <= 50; i++){
             aux.add(-1);
@@ -709,11 +766,16 @@ public class TestInGameScreen extends javax.swing.JFrame {
         System.out.printf("%d %d\n", (int)tree.answer.getFirst(), (int)tree.answer.getSecond());
     }
     private void youDied(){
-        ImageIcon icon = new ImageIcon("images/youDied.jpg");
-        JLabel label = new JLabel(icon);
-        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-180, 210, 1156, 142));
-        setComponentZOrder(label, 0);
-        System.out.println("YOU DIED");
+        jButton1.setText("EXIT");
+        isPlaying = false;
+        image.setVisible(true);
+//        ImageIcon icon = new ImageIcon("images/youDied.jpg");
+//        JLabel image = new JLabel(icon);
+//        getContentPane().add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(-180, 210, 1156, 142));
+//        setComponentZOrder(image, 0);
+        pack();
+        repaint();
+//        System.out.println("YOU DIED");
     }
 
 //    /**
@@ -790,5 +852,9 @@ public class TestInGameScreen extends javax.swing.JFrame {
     private javax.swing.JLabel answerLabel;
     private java.awt.Panel panel_L;
     private java.awt.Panel panel_R;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel labelScore;
+    private javax.swing.JLabel labelTime;
     // End of variables declaration                   
 }
