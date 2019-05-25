@@ -799,7 +799,7 @@ public class TestInGameScreen extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Please just hit OK and I will close the game for you...");
         JOptionPane.showMessageDialog(null, "Do not come back, you cheater!");
         for(int i = 0; i < 100; i++){
-            JOptionPane.showMessageDialog(null, 0);
+            JOptionPane.showMessageDialog(null, "");
         }
         exit(666);
     }
