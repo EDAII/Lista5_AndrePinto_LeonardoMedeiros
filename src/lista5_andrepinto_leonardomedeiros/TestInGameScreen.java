@@ -40,12 +40,17 @@ public class TestInGameScreen extends javax.swing.JFrame {
     public int lastLClick = -1;
     public int lastRClick = -1;
     public String username = "";
+    public boolean increaseTime = false;
     AVLTree tree = new AVLTree();
     Thread timeThread = new Thread(){
         @Override
         public void run() {
             try {
                 while(timeLimit>0 && isPlaying){
+                    if(increaseTime){
+                        increaseTime = false;
+                        timeLimit+=timeLimit*0.1;
+                    }
                     sleep(100);
                     timeLimit-=100;
                     String timeText = Integer.toString(timeLimit/1000)+'.'+Integer.toString((timeLimit/100)%10);
@@ -748,6 +753,7 @@ public class TestInGameScreen extends javax.swing.JFrame {
     } 
     private void nextRound(){
         score+=timeLimit/100;
+        increaseTime = true;
         labelScore.setText(Integer.toString(score));
         ArrayList aux = new ArrayList();
         for(int i = 1; i <= 50; i++){
@@ -814,12 +820,12 @@ public class TestInGameScreen extends javax.swing.JFrame {
         FileWriter arq = null;
         arq = new FileWriter(".record");
         PrintWriter printToFile = null;
-        for(int aux = 0; aux < 10; aux++){
-            System.out.print(name[aux]);
-            System.out.println("");
-            System.out.print(scores[aux]);
-            System.out.println("");
-        }
+//        for(int aux = 0; aux < 10; aux++){
+//            System.out.print(name[aux]);
+//            System.out.println("");
+//            System.out.print(scores[aux]);
+//            System.out.println("");
+//        }
         boolean isAdded = false;
         int maxAdds = 10;
         for(int aux = 0; aux < maxAdds; aux++){
