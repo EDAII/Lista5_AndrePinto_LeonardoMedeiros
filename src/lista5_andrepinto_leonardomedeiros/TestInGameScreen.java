@@ -25,6 +25,7 @@ public class TestInGameScreen extends javax.swing.JFrame {
     public int lastLClick = -1;
     public int lastRClick = -1;
     Pair <Integer, Integer> answer = new Pair <Integer, Integer>(-1,-1);
+    AVLTree tree = new AVLTree();
     public class CirclePanel extends JPanel {
         private int value;
         private int type;
@@ -93,7 +94,6 @@ public class TestInGameScreen extends javax.swing.JFrame {
         initComponents();
         panel_R.setBackground(Color.CYAN);
         panel_L.setBackground(Color.PINK);
-        AVLTree tree = new AVLTree();
         AVLTree.Node root = null;
         ArrayList randNumbers = new ArrayList();
         for(int i = 1; i <= 50; i++){
@@ -665,18 +665,44 @@ public class TestInGameScreen extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         if(answer.getFirst() == lastLClick && answer.getSecond() == lastRClick){
-            System.out.println("YOU WIN");
+            nextRound();
+            repaint();
+            pack();
         }
         else{
             youDied();
+            repaint();
+            pack();
         }
     } 
+    private void nextRound(){
+        tree = new AVLTree();
+        AVLTree.Node root = null;
+        ArrayList randNumbers = new ArrayList();
+        for(int i = 1; i <= 50; i++){
+            randNumbers.add(i);
+        }
+        Collections.shuffle(randNumbers);
+        int maxElements = getRandomIntegerBetweenRange(5,15);
+        for(int i = 0; i < maxElements; i++){
+            root = tree.insert(root, (int)randNumbers.get(i));
+        }
+        String nextInteraction = "";
+        nextInteraction+="insert: ";
+        nextInteraction+=(int)randNumbers.get(maxElements);
+        answerLabel.setText(nextInteraction);
+        ArrayList a = new ArrayList();
+        a = tree.treeToArray(root);
+//        tree.print(root);
+        answer = tree.fakeInsert(root, (int)randNumbers.get(maxElements));
+        updateValues(a);
+        pack();
+    }
     private void youDied(){
         ImageIcon icon = new ImageIcon("/home/andrelucax/Desktop/youDied.jpg");
         JLabel label = new JLabel(icon);
         getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-180, 210, 1156, 142));
         setComponentZOrder(label, 0);
-        pack();
         System.out.println("YOU DIED");
     }
 
