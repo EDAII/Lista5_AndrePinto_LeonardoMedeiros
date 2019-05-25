@@ -709,7 +709,7 @@ public class TestInGameScreen extends javax.swing.JFrame {
         System.out.printf("%d %d\n", (int)tree.answer.getFirst(), (int)tree.answer.getSecond());
     }
     private void youDied(){
-        ImageIcon icon = new ImageIcon("/home/andrelucax/Desktop/youDied.jpg");
+        ImageIcon icon = new ImageIcon("images/youDied.jpg");
         JLabel label = new JLabel(icon);
         getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-180, 210, 1156, 142));
         setComponentZOrder(label, 0);
