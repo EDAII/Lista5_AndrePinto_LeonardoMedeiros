@@ -33,10 +33,10 @@ public class AVLTree {
             return(pair);
         }
 
-        if (value < node.value)
-            node.left  = insert(node.left, value);
-        else
-            node.right = insert(node.right, value);
+//        if (value < node.value)
+//            node.left  = insert(node.left, value);
+//        else
+//            node.right = insert(node.right, value);
 
         /* 2. Update height of this ancestor node */
         node.height = Math.max(height(node.left), height(node.right)) + 1;

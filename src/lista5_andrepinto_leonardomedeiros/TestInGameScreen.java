@@ -676,6 +676,11 @@ public class TestInGameScreen extends javax.swing.JFrame {
         }
     } 
     private void nextRound(){
+        ArrayList aux = new ArrayList();
+        for(int i = 1; i <= 50; i++){
+            aux.add(-1);
+        }
+        updateValues(aux);
         tree = new AVLTree();
         AVLTree.Node root = null;
         ArrayList randNumbers = new ArrayList();
@@ -696,7 +701,7 @@ public class TestInGameScreen extends javax.swing.JFrame {
 //        tree.print(root);
         answer = tree.fakeInsert(root, (int)randNumbers.get(maxElements));
         updateValues(a);
-        pack();
+        tree.print(root);
     }
     private void youDied(){
         ImageIcon icon = new ImageIcon("/home/andrelucax/Desktop/youDied.jpg");
