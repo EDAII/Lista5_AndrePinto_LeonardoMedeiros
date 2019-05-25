@@ -83,8 +83,8 @@ public class InitScreen extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         setVisible(false);
-        InGameScreen gameScreen = new InGameScreen();
-        gameScreen.setSize(800, 600);
+        TestInGameScreen gameScreen = new TestInGameScreen();
+        gameScreen.setSize(800, 610);
         gameScreen.setLocationRelativeTo(null);
         gameScreen.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed

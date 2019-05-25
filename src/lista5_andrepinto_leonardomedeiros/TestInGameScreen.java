@@ -6,7 +6,9 @@
 package lista5_andrepinto_leonardomedeiros;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.JPanel;
@@ -15,12 +17,76 @@ import javax.swing.JPanel;
  *
  * @author andrelucax
  */
-public class InGameScreen extends javax.swing.JFrame {
-
+public class TestInGameScreen extends javax.swing.JFrame {
+    public int lClick = 0;
+    public int rClick = 0;
+    public int lastLClick = -1;
+    public int lastRClick = -1;
+    public class CirclePanel extends JPanel {
+        private int value;
+        private int type;
+        public CirclePanel(int value) {
+            this.value = value;
+            type = 0;
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if(type != 0){
+                        if(type == 1){ //left
+                            lClick--;
+                            lastLClick = -1;
+                        }
+                        else if(type == 2){ //right
+                            rClick--;
+                            lastRClick = -1;
+                        }
+                        type = 0;
+                    }
+                    else if(e.getButton() == MouseEvent.BUTTON1 && lClick == 0 && getValue() != -1){ //left
+                        type = 1;
+                        lClick++;
+                        lastLClick = getValue();
+                    }
+                    else if(e.getButton() == MouseEvent.BUTTON3 && rClick == 0 && getValue() != -1){ //right
+                        type = 2;
+                        rClick++;
+                        lastRClick = getValue();
+                    }
+                    repaint();
+                }
+            });
+        }
+        @Override
+        protected void paintComponent(Graphics g) {
+            if(value == -1){
+                g.setColor(Color.WHITE);
+                g.fillOval(0, 0, getWidth(), getHeight());
+                return;
+            }
+            if(type == 1){
+                g.setColor(Color.PINK);
+            }
+            else if(type == 2){
+                g.setColor(Color.CYAN);
+            }
+            else{
+                g.setColor(Color.LIGHT_GRAY);
+            }
+            g.fillOval(0, 0, getWidth(), getHeight());
+            g.setColor(Color.BLACK);
+            g.drawString(Integer.toString(value), getWidth()/2 - 6, getWidth()/2 + 6);
+        }
+        public void setValue(int value){
+            this.value = value;
+        }
+        public int getValue(){
+            return value;
+        }
+    }
     /*
      * Creates new form InGameScreen
      */
-    public InGameScreen() {
+    public TestInGameScreen() {
         initComponents();
         AVLTree tree = new AVLTree();
         AVLTree.Node root = null;
@@ -29,21 +95,51 @@ public class InGameScreen extends javax.swing.JFrame {
             randNumbers.add(i);
         }
         Collections.shuffle(randNumbers);
-        int maxElements = getRandomIntegerBetweenRange(10,15);
+        int maxElements = getRandomIntegerBetweenRange(5,15);
         for(int i = 0; i < maxElements; i++){
             root = tree.insert(root, (int)randNumbers.get(i));
         }
-        tree.print(root);
         ArrayList a = new ArrayList();
         a = tree.treeToArray(root);
-        
-//        CirclePanel jPanel = new CirclePanel("12");
-//        jPanel.setSize(new Dimension(50, 50));
-//        jPanel.setBackground(Color.RED);
-//        jPanel.repaint();
-//        jPanel.setVisible(true);
-//        getContentPane().add(jPanel,new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 40, 40));
-//        pack();
+        updateValues(a);
+    }
+    public void updateValues(ArrayList a){
+        try{
+            panel_1.setValue((int) a.get(0));
+            panel_2.setValue((int) a.get(1));
+            panel_3.setValue((int) a.get(2));
+            panel_4.setValue((int) a.get(3));
+            panel_5.setValue((int) a.get(4));
+            panel_6.setValue((int) a.get(5));
+            panel_7.setValue((int) a.get(6));
+            panel_8.setValue((int) a.get(7));
+            panel_9.setValue((int) a.get(8));
+            panel_10.setValue((int) a.get(9));
+            panel_11.setValue((int) a.get(10));
+            panel_12.setValue((int) a.get(11));
+            panel_13.setValue((int) a.get(12));
+            panel_14.setValue((int) a.get(13));
+            panel_15.setValue((int) a.get(14));
+            panel_16.setValue((int) a.get(15));
+            panel_17.setValue((int) a.get(16));
+            panel_18.setValue((int) a.get(17));
+            panel_19.setValue((int) a.get(18));
+            panel_20.setValue((int) a.get(19));
+            panel_21.setValue((int) a.get(20));
+            panel_22.setValue((int) a.get(21));
+            panel_23.setValue((int) a.get(22));
+            panel_24.setValue((int) a.get(23));
+            panel_25.setValue((int) a.get(24));
+            panel_26.setValue((int) a.get(25));
+            panel_27.setValue((int) a.get(26));
+            panel_28.setValue((int) a.get(27));
+            panel_29.setValue((int) a.get(28));
+            panel_30.setValue((int) a.get(29));
+            panel_31.setValue((int) a.get(30));
+        }
+        catch(Exception e){
+                
+        }
     }
     public static int getRandomIntegerBetweenRange(int min, int max){
         int x = (int)(Math.random()*((max-min)+1))+min;
@@ -56,43 +152,42 @@ public class InGameScreen extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        panel_11 = new java.awt.Panel();
-        panel_30 = new java.awt.Panel();
-        panel_29 = new java.awt.Panel();
-        panel_28 = new java.awt.Panel();
-        panel_27 = new java.awt.Panel();
-        panel_26 = new java.awt.Panel();
-        panel_25 = new java.awt.Panel();
-        panel_24 = new java.awt.Panel();
-        panel_23 = new java.awt.Panel();
-        panel_22 = new java.awt.Panel();
-        panel_21 = new java.awt.Panel();
-        panel_20 = new java.awt.Panel();
-        panel_19 = new java.awt.Panel();
-        panel_18 = new java.awt.Panel();
-        panel_17 = new java.awt.Panel();
-        panel_16 = new java.awt.Panel();
-        panel_31 = new java.awt.Panel();
-        panel_14 = new java.awt.Panel();
-        panel_13 = new java.awt.Panel();
-        panel_12 = new java.awt.Panel();
-        panel_15 = new java.awt.Panel();
-        panel_10 = new java.awt.Panel();
-        panel_9 = new java.awt.Panel();
-        panel_8 = new java.awt.Panel();
-        panel_4 = new java.awt.Panel();
-        panel_5 = new java.awt.Panel();
-        panel_6 = new java.awt.Panel();
-        panel_7 = new java.awt.Panel();
-        panel_3 = new java.awt.Panel();
-        panel_2 = new java.awt.Panel();
-        panel_1 = new java.awt.Panel();
+        panel_11 = new CirclePanel(-1);
+        panel_30 = new CirclePanel(-1);
+        panel_29 = new CirclePanel(-1);
+        panel_28 = new CirclePanel(-1);
+        panel_27 = new CirclePanel(-1);
+        panel_26 = new CirclePanel(-1);
+        panel_25 = new CirclePanel(-1);
+        panel_24 = new CirclePanel(-1);
+        panel_23 = new CirclePanel(-1);
+        panel_22 = new CirclePanel(-1);
+        panel_21 = new CirclePanel(-1);
+        panel_20 = new CirclePanel(-1);
+        panel_19 = new CirclePanel(-1);
+        panel_18 = new CirclePanel(-1);
+        panel_17 = new CirclePanel(-1);
+        panel_16 = new CirclePanel(-1);
+        panel_31 = new CirclePanel(-1);
+        panel_14 = new CirclePanel(-1);
+        panel_13 = new CirclePanel(-1);
+        panel_12 = new CirclePanel(-1);
+        panel_15 = new CirclePanel(-1);
+        panel_10 = new CirclePanel(-1);
+        panel_9 = new CirclePanel(-1);
+        panel_8 = new CirclePanel(-1);
+        panel_4 = new CirclePanel(-1);
+        panel_5 = new CirclePanel(-1);
+        panel_6 = new CirclePanel(-1);
+        panel_7 = new CirclePanel(-1);
+        panel_3 = new CirclePanel(-1);
+        panel_2 = new CirclePanel(-1);
+        panel_1 = new CirclePanel(-1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(254, 254, 254));
         setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -502,7 +597,7 @@ public class InGameScreen extends javax.swing.JFrame {
         panel_1.getAccessibleContext().setAccessibleName("");
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
 //    /**
 //     * @param args the command line arguments
@@ -539,37 +634,37 @@ public class InGameScreen extends javax.swing.JFrame {
 //        });
 //    }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Panel panel_1;
-    private java.awt.Panel panel_10;
-    private java.awt.Panel panel_11;
-    private java.awt.Panel panel_12;
-    private java.awt.Panel panel_13;
-    private java.awt.Panel panel_14;
-    private java.awt.Panel panel_15;
-    private java.awt.Panel panel_16;
-    private java.awt.Panel panel_17;
-    private java.awt.Panel panel_18;
-    private java.awt.Panel panel_19;
-    private java.awt.Panel panel_2;
-    private java.awt.Panel panel_20;
-    private java.awt.Panel panel_21;
-    private java.awt.Panel panel_22;
-    private java.awt.Panel panel_23;
-    private java.awt.Panel panel_24;
-    private java.awt.Panel panel_25;
-    private java.awt.Panel panel_26;
-    private java.awt.Panel panel_27;
-    private java.awt.Panel panel_28;
-    private java.awt.Panel panel_29;
-    private java.awt.Panel panel_3;
-    private java.awt.Panel panel_30;
-    private java.awt.Panel panel_31;
-    private java.awt.Panel panel_4;
-    private java.awt.Panel panel_5;
-    private java.awt.Panel panel_6;
-    private java.awt.Panel panel_7;
-    private java.awt.Panel panel_8;
-    private java.awt.Panel panel_9;
-    // End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify                     
+    private CirclePanel panel_1;
+    private CirclePanel panel_10;
+    private CirclePanel panel_11;
+    private CirclePanel panel_12;
+    private CirclePanel panel_13;
+    private CirclePanel panel_14;
+    private CirclePanel panel_15;
+    private CirclePanel panel_16;
+    private CirclePanel panel_17;
+    private CirclePanel panel_18;
+    private CirclePanel panel_19;
+    private CirclePanel panel_2;
+    private CirclePanel panel_20;
+    private CirclePanel panel_21;
+    private CirclePanel panel_22;
+    private CirclePanel panel_23;
+    private CirclePanel panel_24;
+    private CirclePanel panel_25;
+    private CirclePanel panel_26;
+    private CirclePanel panel_27;
+    private CirclePanel panel_28;
+    private CirclePanel panel_29;
+    private CirclePanel panel_3;
+    private CirclePanel panel_30;
+    private CirclePanel panel_31;
+    private CirclePanel panel_4;
+    private CirclePanel panel_5;
+    private CirclePanel panel_6;
+    private CirclePanel panel_7;
+    private CirclePanel panel_8;
+    private CirclePanel panel_9;
+    // End of variables declaration                   
 }
