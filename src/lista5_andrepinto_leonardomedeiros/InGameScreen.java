@@ -5,8 +5,11 @@
  */
 package lista5_andrepinto_leonardomedeiros;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.JPanel;
 
 /**
  *
@@ -18,7 +21,7 @@ public class InGameScreen extends javax.swing.JFrame {
      * Creates new form InGameScreen
      */
     public InGameScreen() {
-        initComponents();       
+        initComponents();
         AVLTree tree = new AVLTree();
         AVLTree.Node root = null;
         ArrayList randNumbers = new ArrayList();
@@ -34,12 +37,13 @@ public class InGameScreen extends javax.swing.JFrame {
         ArrayList a = new ArrayList();
         a = tree.treeToArray(root);
         
-//        JPanel jPanel = new JPanel();
-//        jPanel.setSize(new Dimension(50, 50));
-//        jPanel.setBackground(Color.PINK);
-//        jPanel.setVisible(true);
-//        getContentPane().add(jPanel);
-//        pack();
+        CirclePanel jPanel = new CirclePanel("12");
+        jPanel.setSize(new Dimension(50, 50));
+        jPanel.setBackground(Color.RED);
+        jPanel.repaint();
+        jPanel.setVisible(true);
+        getContentPane().add(jPanel,new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 40, 40));
+        pack();
     }
     public static int getRandomIntegerBetweenRange(int min, int max){
         int x = (int)(Math.random()*((max-min)+1))+min;
