@@ -11,6 +11,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -22,6 +24,7 @@ public class TestInGameScreen extends javax.swing.JFrame {
     public int rClick = 0;
     public int lastLClick = -1;
     public int lastRClick = -1;
+    Pair <Integer, Integer> answer = new Pair <Integer, Integer>(-1,-1);
     public class CirclePanel extends JPanel {
         private int value;
         private int type;
@@ -107,6 +110,8 @@ public class TestInGameScreen extends javax.swing.JFrame {
         answerLabel.setText(nextInteraction);
         ArrayList a = new ArrayList();
         a = tree.treeToArray(root);
+//        tree.print(root);
+        answer = tree.fakeInsert(root, (int)randNumbers.get(maxElements));
         updateValues(a);
     }
     private void updateValues(ArrayList a){
@@ -659,8 +664,21 @@ public class TestInGameScreen extends javax.swing.JFrame {
     }// </editor-fold>   
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+        if(answer.getFirst() == lastLClick && answer.getSecond() == lastRClick){
+            System.out.println("YOU WIN");
+        }
+        else{
+            youDied();
+        }
     } 
+    private void youDied(){
+        ImageIcon icon = new ImageIcon("/home/andrelucax/Desktop/youDied.jpg");
+        JLabel label = new JLabel(icon);
+        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(-180, 210, 1156, 142));
+        setComponentZOrder(label, 0);
+        pack();
+        System.out.println("YOU DIED");
+    }
 
 //    /**
 //     * @param args the command line arguments
