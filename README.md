@@ -45,6 +45,7 @@ AVL The Game is just a litle game about AVL Trees, with the objetive of ~get rag
 The game was fully desenvolved in Java, and should work in any JVM compatible platform, has an ingame tutorial and a local highscore system.
 
 ![intialScreen](https://github.com/EDAII/Lista5_AndrePinto_LeonardoMedeiros/blob/master/images/initialScreen.jpg)
+![tutorial](https://github.com/EDAII/Lista5_AndrePinto_LeonardoMedeiros/blob/master/images/tutorial.jpg)
 ![score](https://github.com/EDAII/Lista5_AndrePinto_LeonardoMedeiros/blob/master/images/scores.jpg)
 ![inGame](https://github.com/EDAII/Lista5_AndrePinto_LeonardoMedeiros/blob/master/images/inGame.jpg)
 ![loseScreen](https://github.com/EDAII/Lista5_AndrePinto_LeonardoMedeiros/blob/master/images/loseScreen.jpg)
