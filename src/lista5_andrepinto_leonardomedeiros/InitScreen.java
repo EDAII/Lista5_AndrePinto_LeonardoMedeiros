@@ -5,6 +5,10 @@
  */
 package lista5_andrepinto_leonardomedeiros;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 /**
@@ -30,10 +34,15 @@ public class InitScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        usernameField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,35 +56,57 @@ public class InitScreen extends javax.swing.JFrame {
         jButton5.setText("TUTORIAL");
 
         jButton6.setText("HIGHSCORE");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 48)); // NOI18N
         jLabel1.setText("AVL THE GAME");
+
+        usernameField.setText("imASuperNoob");
+        usernameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usernameFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Name:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(70, Short.MAX_VALUE)
+                .addContainerGap(236, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(237, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addGap(81, 81, 81)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(60, 60, 60)
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addGap(18, 18, 18)
                 .addComponent(jButton6)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(162, 162, 162))
         );
 
         pack();
@@ -83,11 +114,45 @@ public class InitScreen extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         setVisible(false);
-        TestInGameScreen gameScreen = new TestInGameScreen();
+        TestInGameScreen gameScreen = new TestInGameScreen(usernameField.getText());
         gameScreen.setSize(800, 610);
         gameScreen.setLocationRelativeTo(null);
         gameScreen.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameFieldActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        File arquivo = new File(".record");
+        String record = "";
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(arquivo.getAbsolutePath()));
+            for(int aux = 0; aux < 9; aux++){
+                record+=Integer.toString(aux+1);
+                record+=" - ";
+                String auxS = br.readLine();
+                record+=auxS;
+                record+=": ";
+                auxS = br.readLine();
+                record+=auxS;
+                record+='\n';
+            }
+            record+=Integer.toString(10);
+            record+=" - ";
+            String auxS = br.readLine();
+            record+=auxS;
+            record+=": ";
+            auxS = br.readLine();
+            record+=auxS;
+        }
+        catch(Exception e){
+            
+        }
+
+        JOptionPane.showMessageDialog(null, record);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -129,5 +194,8 @@ public class InitScreen extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }

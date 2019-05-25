@@ -9,6 +9,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import static java.lang.System.exit;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
@@ -33,6 +39,7 @@ public class TestInGameScreen extends javax.swing.JFrame {
     public int rClick = 0;
     public int lastLClick = -1;
     public int lastRClick = -1;
+    public String username = "";
     AVLTree tree = new AVLTree();
     Thread timeThread = new Thread(){
         @Override
@@ -44,9 +51,13 @@ public class TestInGameScreen extends javax.swing.JFrame {
                     String timeText = Integer.toString(timeLimit/1000)+'.'+Integer.toString((timeLimit/100)%10);
                     labelTime.setText(timeText);
                 }
-                youDied();
+                if(isPlaying){
+                    youDied();
+                }
 
             } catch (InterruptedException ex) {
+                Logger.getLogger(TestInGameScreen.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(TestInGameScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -127,7 +138,8 @@ public class TestInGameScreen extends javax.swing.JFrame {
         image.setVisible(false);
         pack();
     }
-    public TestInGameScreen() {
+    public TestInGameScreen(String username) {
+        this.username = username;
         initMyComponents();
         initComponents();
         timeThread.start();
@@ -692,7 +704,11 @@ public class TestInGameScreen extends javax.swing.JFrame {
         jButton1.setText("ANSWER");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+                    jButton1ActionPerformed(evt);
+                } catch (IOException ex) {
+                    Logger.getLogger(TestInGameScreen.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 490, 130, -1));
@@ -718,7 +734,7 @@ public class TestInGameScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>   
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
         if(!isPlaying){
             exit(0);
         }
@@ -763,9 +779,10 @@ public class TestInGameScreen extends javax.swing.JFrame {
         root = tree.fakeInsert(root, (int)randNumbers.get(maxElements));
         updateValues(a);
 //        tree.print(root);
-        System.out.printf("%d %d\n", (int)tree.answer.getFirst(), (int)tree.answer.getSecond());
+//        System.out.printf("%d %d\n", (int)tree.answer.getFirst(), (int)tree.answer.getSecond());
     }
-    private void youDied(){
+    private void youDied() throws IOException{
+        updateScore();
         jButton1.setText("EXIT");
         isPlaying = false;
         image.setVisible(true);
@@ -776,6 +793,53 @@ public class TestInGameScreen extends javax.swing.JFrame {
         pack();
         repaint();
 //        System.out.println("YOU DIED");
+    }
+    private void updateScore() throws IOException{
+        String[] name = new String[10];
+        int[] scores = new int[10];
+        File arquivo = new File(".record");
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(arquivo.getAbsolutePath()));
+            for(int aux = 0; aux < 10; aux++){
+                String auxS = br.readLine();
+                name[aux] = auxS;
+                auxS = br.readLine();
+                scores[aux] = Integer.valueOf(auxS);
+            }
+        }
+        catch(Exception e){
+            
+        }
+        
+        FileWriter arq = null;
+        arq = new FileWriter(".record");
+        PrintWriter printToFile = null;
+        for(int aux = 0; aux < 10; aux++){
+            System.out.print(name[aux]);
+            System.out.println("");
+            System.out.print(scores[aux]);
+            System.out.println("");
+        }
+        boolean isAdded = false;
+        int maxAdds = 10;
+        for(int aux = 0; aux < maxAdds; aux++){
+            if(score > scores[aux] && !isAdded){
+                arq.write(username);
+                arq.write("\n");
+                arq.write(Integer.toString(score));
+                arq.write("\n");
+                isAdded = true;
+                maxAdds--;
+                aux--;
+            }
+            else{
+                arq.write(name[aux]);
+                arq.write("\n");
+                arq.write(Integer.toString(scores[aux]));
+                arq.write("\n");
+            }
+        }
+        arq.close();
     }
 
 //    /**

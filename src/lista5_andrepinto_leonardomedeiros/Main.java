@@ -14,7 +14,7 @@ public class Main {
      */
     public static void main(String args[]) {
         InitScreen initScreen = new InitScreen();
-        initScreen.setSize(800, 600);
+        initScreen.setSize(800, 610);
         initScreen.setLocationRelativeTo(null);
         initScreen.setVisible(true);
     }
