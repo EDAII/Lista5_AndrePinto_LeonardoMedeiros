@@ -24,7 +24,6 @@ public class TestInGameScreen extends javax.swing.JFrame {
     public int rClick = 0;
     public int lastLClick = -1;
     public int lastRClick = -1;
-    Pair <Integer, Integer> answer = new Pair <Integer, Integer>(-1,-1);
     AVLTree tree = new AVLTree();
     public class CirclePanel extends JPanel {
         private int value;
@@ -81,6 +80,9 @@ public class TestInGameScreen extends javax.swing.JFrame {
             g.drawString(Integer.toString(value), getWidth()/2 - 6, getWidth()/2 + 6);
         }
         public void setValue(int value){
+            if(value == -1){
+                this.type = 0;
+            }
             this.value = value;
         }
         public int getValue(){
@@ -111,7 +113,7 @@ public class TestInGameScreen extends javax.swing.JFrame {
         ArrayList a = new ArrayList();
         a = tree.treeToArray(root);
 //        tree.print(root);
-        answer = tree.fakeInsert(root, (int)randNumbers.get(maxElements));
+        root = tree.fakeInsert(root, (int)randNumbers.get(maxElements));
         updateValues(a);
     }
     private void updateValues(ArrayList a){
@@ -663,23 +665,25 @@ public class TestInGameScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>   
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        if(answer.getFirst() == lastLClick && answer.getSecond() == lastRClick){
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        if(tree.answer.getFirst() == lastLClick && tree.answer.getSecond() == lastRClick){
             nextRound();
-            repaint();
-            pack();
         }
         else{
             youDied();
-            repaint();
-            pack();
         }
+        repaint();
+        pack();
     } 
     private void nextRound(){
         ArrayList aux = new ArrayList();
         for(int i = 1; i <= 50; i++){
             aux.add(-1);
         }
+        lClick = 0;
+        rClick = 0;
+        lastLClick = -1;
+        lastRClick = -1;
         updateValues(aux);
         tree = new AVLTree();
         AVLTree.Node root = null;
@@ -699,9 +703,10 @@ public class TestInGameScreen extends javax.swing.JFrame {
         ArrayList a = new ArrayList();
         a = tree.treeToArray(root);
 //        tree.print(root);
-        answer = tree.fakeInsert(root, (int)randNumbers.get(maxElements));
+        root = tree.fakeInsert(root, (int)randNumbers.get(maxElements));
         updateValues(a);
-        tree.print(root);
+//        tree.print(root);
+        System.out.printf("%d %d\n", (int)tree.answer.getFirst(), (int)tree.answer.getSecond());
     }
     private void youDied(){
         ImageIcon icon = new ImageIcon("/home/andrelucax/Desktop/youDied.jpg");

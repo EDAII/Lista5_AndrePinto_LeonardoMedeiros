@@ -11,6 +11,7 @@ import java.util.*;
  * @author andrelucax
  */
 public class AVLTree {
+    public Pair<Integer, Integer> answer = new Pair<Integer, Integer>(-1,-1);
     public class Node {
         private Node left, right, parent;
         private int height = 1;
@@ -26,17 +27,15 @@ public class AVLTree {
         return N.height;
     }
     
-    public Pair<Integer, Integer> fakeInsert(Node node, int value) {
+    public Node fakeInsert(Node node, int value) {
         /* 1.  Perform the normal BST rotation */
-        Pair<Integer, Integer> pair = new Pair<Integer,Integer>(-1,-1);
         if (node == null) {
-            return(pair);
+            return(new Node(value));
         }
-
         if (value < node.value)
-            node.left  = insert(node.left, value);
+            node.left  = fakeInsert(node.left, value);
         else
-            node.right = insert(node.right, value);
+            node.right = fakeInsert(node.right, value);
 
         /* 2. Update height of this ancestor node */
         node.height = Math.max(height(node.left), height(node.right)) + 1;
@@ -49,36 +48,62 @@ public class AVLTree {
 
         // Left Left Case
         if (balance > 1 && value < node.left.value)
-        {
-            pair.setFirst(node.value);
-            return (pair);
-        }
+            return fakeRightRotate(node);
 
         // Right Right Case
         if (balance < -1 && value > node.right.value)
-        {
-            pair.setSecond(node.value);
-            return (pair);
-        }
+            return fakeLeftRotate(node);
 
         // Left Right Case
         if (balance > 1 && value > node.left.value)
         {
-            pair.setFirst(node.left.value);
-            pair.setSecond(node.value);
-            return (pair);
+            node.left =  fakeLeftRotate(node.left);
+            return fakeRightRotate(node);
         }
 
         // Right Left Case
         if (balance < -1 && value < node.right.value)
         {
-            pair.setFirst(node.value);
-            pair.setSecond(node.right.value);
-            return (pair);
+            node.right = fakeRightRotate(node.right);
+            return fakeLeftRotate(node);
         }
 
         /* return the (unchanged) node pointer */
-        return pair;
+        return node;
+    }
+    
+    private Node fakeRightRotate(Node y) {
+        answer.setSecond(y.value);
+        Node x = y.left;
+        Node T2 = x.right;
+
+        // Perform rotation
+        x.right = y;
+        y.left = T2;
+
+        // Update heights
+        y.height = Math.max(height(y.left), height(y.right))+1;
+        x.height = Math.max(height(x.left), height(x.right))+1;
+
+        // Return new root
+        return x;
+    }
+
+    private Node fakeLeftRotate(Node x) {
+        answer.setFirst(x.value);
+        Node y = x.right;
+        Node T2 = y.left;
+
+        // Perform rotation
+        y.left = x;
+        x.right = T2;
+
+        //  Update heights
+        x.height = Math.max(height(x.left), height(x.right))+1;
+        y.height = Math.max(height(y.left), height(y.right))+1;
+
+        // Return new root
+        return y;
     }
 
     public Node insert(Node node, int value) {
