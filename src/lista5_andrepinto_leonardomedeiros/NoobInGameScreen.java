@@ -736,7 +736,6 @@ public class NoobInGameScreen extends javax.swing.JFrame {
         }
         if(tree.answer.getFirst() == lastLClick && tree.answer.getSecond() == lastRClick){
             score+=400;
-            System.out.println(score);
             nextRound();
             repaint();
         }
